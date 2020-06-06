@@ -1,0 +1,37 @@
+:root{
+    --bg-color:#333;
+    --font-color:#fff;
+    --primary-color:#008ed6;
+    --dark-overlay:rgba(0,0,0,0.7);
+    --icon-size: 30px;
+}
+
+
+.card-form{
+    opacity:0.8;
+}
+
+.fa{
+    color: var(--primary-color);
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: var(--icon-size);
+}
+
+#explore-section .fa,
+#share-section .fa{
+    color: #fff;
+    background: #333;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: var(--icon-size);
+}
+
+#create-section .f{
+    color: #fff;
+    background: #333;
+    padding: 4px;
+    border-radius: 5px;
+    font-size: var(--icon-size);
+}
