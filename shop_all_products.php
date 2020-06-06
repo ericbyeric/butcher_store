@@ -57,57 +57,104 @@
     }
 ?>
 
-
-<div class="container">
-
-        <div class="filters form-inline mt-2">
+	<div class="container">
+        <div class="sorters form-inline mt-2">
             <h4 class="mt-1 mr-2">Sort by: </h4>
             <form method="POST" action="./shop_all_products.php">
+
                <select id="sortType" name="sortType">
-                  <option name="sortChoice" value="PHighToLow" >Price High to Low</option>
-                  <option name="sortChoice" value="PLowToHigh">Price Low to High</option>
-                  <option name="sortChoice" value="RHighToLow">Rating High to Low</option>
-                  <option name="sortChoice" value="NAtoZ">Name A to Z</option>
-                  <option name="sortChoice" value="NZtoA">Name Z to A</option>
+                  <option value="PHighToLow" >Price High to Low</option>
+                  <option value="PLowToHigh">Price Low to High</option>
+                  <option value="RHighToLow">Rating High to Low</option>
+                  <option value="NAtoZ">Name A to Z</option>
+                  <option value="NZtoA">Name Z to A</option>
+				</select>
+				<select id="typeFilter" name="typeFilter">
+                  <option value="beef" >Beef</option>
+                  <option value="pork">Pork</option>
+                  <option value="lamb">Lamb</option>
+				</select>
+				<select id="cutFilter" name="cutFilter">
+                  <option value="fillet" >Fillet</option>
+                  <option value="roast">Roast</option>
+                  <option value="brisket">Brisket</option>
+				  <option value="skirt" >Skirt</option>
+                  <option value="flank">Flank</option>
+                  <option value="sirloin">Sirloin</option>
+				  <option value="shortribs" >Shortribs</option>
+                  <option value="flatiron">Flatiron</option>
+                  <option value="striploin">Striploin</option>
+				  <option value="tenderloin" >Tenderloin</option>
+                  <option value="shank">Shank</option>
+                  <option value="tbone">Tbone</option>
+				  <option value="rack" >Rack</option>
+                  <option value="leg">Leg</option>
+                  <option value="shoulder">Shoulder</option>
+				  <option value="saddle" >Saddle</option>
+                  <option value="loinchops">Loinchops</option>
+                  <option value="vealchops">Vealchops</option>
+				  <option value="breast" >Breast</option>
+                  <option value="belly">Belly</option>
+                  <option value="butt">Butt</option>
+				  <option value="ribs" >Ribs</option>
+                  <option value="tomahawk">Tomahawk</option>
+                  <option value="chops">Chops</option>
+				  <option value="loin" >Loin</option>
+                  <option value="porchetta">Porchetta</option>
+                  <option value="ham">Ham</option>
+				</select>
                <input type="submit" name="apply" value="Apply"/>
             </form>
          </div>
     <div class="row">
     <?php
-
-        if(isset($_POST['sortType']))
-        {
-        $sort = $_POST['sortType'];
-
-        if($sort == "PHighToLow"){
-            $sortAtt = "Type.price";
-            $sortOrder = "DESC";
-        }
-        else if($sort == "PLowToHigh"){
-            $sortAtt = "Type.price";
-            $sortOrder = "ASC";
-        }
-        else if($sort == "RHighToLow"){
-            $sortAtt = "reviews_for";
-            $sortOrder = "DESC";
-        }
-        else if($sort == "NZtoA"){
-            $sortAtt = "productName";
-            $sortOrder = "DESC";
-        }
-        else if($sort == "NAtoZ"){
-            $sortAtt = "productName";
-            $sortOrder = "ASC";
-        }
-        }
-        else{
-        $sortAtt = "productName";
-        $sortOrder="ASC";
-        }
-
-
-    $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
-    $query = 'SELECT * FROM PRODUCTS,TYPE WHERE PRODUCTS.productId = TYPE.productId ORDER by '.$sortAtt.' '.$sortOrder; 
+		if(isset($_POST['sortType'])){
+			$sort = $_POST['sortType'];
+			if($sort == "PHighToLow"){
+				$sortAtt = "Type.price";
+				$sortOrder = "DESC";
+			}
+			else if($sort == "PLowToHigh"){
+				$sortAtt = "Type.price";
+				$sortOrder = "ASC";
+			}
+			else if($sort == "RHighToLow"){
+				$sortAtt = "reviews_for";
+				$sortOrder = "DESC";
+			}
+			else if($sort == "NZtoA"){
+				$sortAtt = "productName";
+				$sortOrder = "DESC";
+			}
+			else if($sort == "NAtoZ"){
+				$sortAtt = "productName";
+				$sortOrder = "ASC";
+			}
+			else{
+			$sortAtt = "productName";
+			$sortOrder="ASC";
+			}
+		}
+		else{
+			$sortAtt = "productName";
+			$sortOrder="ASC";
+		}
+		$orderLine =' ORDER by '.$sortAtt.' '.$sortOrder;
+	
+		if(isset($_POST['typeFilter'])){
+			$typeF = ' AND type="'.$_POST['typeFilter'].'"';
+		}
+		else{
+			$typeF = '';
+		}
+		if(isset($_POST['cutFilter'])){
+				$cutF = ' AND cut="'.$_POST['cutFilter'].'"';
+		}
+		else{
+			$cutF = '';
+		}
+    $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+    $query = 'SELECT * FROM PRODUCTS,TYPE WHERE PRODUCTS.productId = TYPE.productId'.$typeF.$cutF.$orderLine;
     $result = mysqli_query($connect, $query);                       // execute the query
 
     if ($result):
@@ -135,7 +182,6 @@
                     </div>
                 </form>
             </div>
-            
 
             <?php
           
