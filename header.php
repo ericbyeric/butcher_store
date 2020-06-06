@@ -34,7 +34,7 @@
                             echo '<li class="nav-item"><a href="home.php" class="nav-link">About Us</a></li>
                                 <li class="nav-item"><a href="shop_by_category.php" class="nav-link">SHOP BY CATEGORY</a></li>
                                     <li class="nav-item"><a href="shop_all_products.php" class="nav-link">SHOP ALL PRODUCTS</a></li>
-                                    <li class="nav-item"><a href="" class="nav-link">CONTACT</a></li>';
+                                    <li class="nav-item"><a href="myAccount.php" class="nav-link">My Account</a></li>';
                         }
 
                         else {

@@ -62,19 +62,19 @@
             <h4 class="mt-1 mr-2">Sort by: </h4>
             <form method="POST" action="./shop_all_products.php">
 
-               <select id="sortType" name="sortType">
+               <select id="sortType" name="sortType">	<!--sort by price, rating, or name-->
                   <option value="PHighToLow" >Price High to Low</option>
                   <option value="PLowToHigh">Price Low to High</option>
                   <option value="RHighToLow">Rating High to Low</option>
                   <option value="NAtoZ">Name A to Z</option>
                   <option value="NZtoA">Name Z to A</option>
 				</select>
-				<select id="typeFilter" name="typeFilter" onchange=<?php $typefilter=value?>>
+				<select id="typeFilter" name="typeFilter" onchange=<?php $typefilter=value?>> <!--filter by beef,pork, or lamb-->
                   <option value="beef"><?php $typefilter="beef";?> Beef</option>
                   <option value="pork"><?php $typefilter="pork";?>Pork</option>
                   <option value="lamb"><?php $typefilter="lamb";?>Lamb</option>
 				</select>
-				<select id="countryFilter" name="countryFilter">
+				<select id="countryFilter" name="countryFilter"> <!--filter by country-->
                   <option value="Australia" >Australia</option>
                   <option value="Chile">Chile</option>
                   <option value="Germany">Germany</option>
@@ -84,7 +84,7 @@
 				  <option value="Spain" >Spain</option>
                   <option value="United States">United States</option>
 				</select>
-				<select id="gradeFilter" name="gradeFilter">
+				<select id="gradeFilter" name="gradeFilter"> <!--filter by grade; needs to be updated-->
 				  <?php
 					echo $typefilter;
 					if($_POST['typeFilter']=="beef"||$_POST['typeFilter']=="lamb"){
