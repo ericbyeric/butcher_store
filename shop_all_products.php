@@ -69,39 +69,35 @@
                   <option value="NAtoZ">Name A to Z</option>
                   <option value="NZtoA">Name Z to A</option>
 				</select>
-				<select id="typeFilter" name="typeFilter">
-                  <option value="beef" >Beef</option>
-                  <option value="pork">Pork</option>
-                  <option value="lamb">Lamb</option>
+				<select id="typeFilter" name="typeFilter" onchange=<?php $typefilter=value?>>
+                  <option value="beef"><?php $typefilter="beef";?> Beef</option>
+                  <option value="pork"><?php $typefilter="pork";?>Pork</option>
+                  <option value="lamb"><?php $typefilter="lamb";?>Lamb</option>
 				</select>
-				<select id="cutFilter" name="cutFilter">
-                  <option value="fillet" >Fillet</option>
-                  <option value="roast">Roast</option>
-                  <option value="brisket">Brisket</option>
-				  <option value="skirt" >Skirt</option>
-                  <option value="flank">Flank</option>
-                  <option value="sirloin">Sirloin</option>
-				  <option value="shortribs" >Shortribs</option>
-                  <option value="flatiron">Flatiron</option>
-                  <option value="striploin">Striploin</option>
-				  <option value="tenderloin" >Tenderloin</option>
-                  <option value="shank">Shank</option>
-                  <option value="tbone">Tbone</option>
-				  <option value="rack" >Rack</option>
-                  <option value="leg">Leg</option>
-                  <option value="shoulder">Shoulder</option>
-				  <option value="saddle" >Saddle</option>
-                  <option value="loinchops">Loinchops</option>
-                  <option value="vealchops">Vealchops</option>
-				  <option value="breast" >Breast</option>
-                  <option value="belly">Belly</option>
-                  <option value="butt">Butt</option>
-				  <option value="ribs" >Ribs</option>
-                  <option value="tomahawk">Tomahawk</option>
-                  <option value="chops">Chops</option>
-				  <option value="loin" >Loin</option>
-                  <option value="porchetta">Porchetta</option>
-                  <option value="ham">Ham</option>
+				<select id="countryFilter" name="countryFilter">
+                  <option value="Australia" >Australia</option>
+                  <option value="Chile">Chile</option>
+                  <option value="Germany">Germany</option>
+				  <option value="Ireland" >Ireland</option>
+                  <option value="New Zealand">New Zealand</option>
+                  <option value="South Korea">South Korea</option>
+				  <option value="Spain" >Spain</option>
+                  <option value="United States">United States</option>
+				</select>
+				<select id="gradeFilter" name="gradeFilter">
+				  <?php
+					echo $typefilter;
+					if($_POST['typeFilter']=="beef"||$_POST['typeFilter']=="lamb"){
+						echo '<option value="Prime">Prime</option>';
+						echo '<option value="Choice">Choice</option>';
+						echo '<option value="Select">Select</option>';
+					}
+					if($_POST['typeFilter']=="pork"){
+						echo '<option value="1">1</option>';
+						echo '<option value="2">2</option>';
+						echo '<option value="3">3</option>';
+					}
+					?>
 				</select>
                <input type="submit" name="apply" value="Apply"/>
             </form>
@@ -147,14 +143,20 @@
 		else{
 			$typeF = '';
 		}
-		if(isset($_POST['cutFilter'])){
-				$cutF = ' AND cut="'.$_POST['cutFilter'].'"';
+		if(isset($_POST['countryFilter'])){
+				$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
 		}
 		else{
-			$cutF = '';
+			$countryF = '';
+		}
+		if(isset($_POST['gradeFilter'])){
+			$gradeF = 'AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+		}
+		else{
+			$gradeF = '';
 		}
     $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
-    $query = 'SELECT * FROM PRODUCTS,TYPE WHERE PRODUCTS.productId = TYPE.productId'.$typeF.$cutF.$orderLine;
+    $query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country'.$typeF.$countryF.$gradeF.$orderLine;
     $result = mysqli_query($connect, $query);                       // execute the query
 
     if ($result):
