@@ -59,11 +59,55 @@
 
 
 <div class="container">
+
+        <div class="filters form-inline mt-2">
+            <h4 class="mt-1 mr-2">Sort by: </h4>
+            <form method="POST" action="./shop_all_products.php">
+               <select id="sortType" name="sortType">
+                  <option name="sortChoice" value="PHighToLow" >Price High to Low</option>
+                  <option name="sortChoice" value="PLowToHigh">Price Low to High</option>
+                  <option name="sortChoice" value="RHighToLow">Rating High to Low</option>
+                  <option name="sortChoice" value="NAtoZ">Name A to Z</option>
+                  <option name="sortChoice" value="NZtoA">Name Z to A</option>
+               <input type="submit" name="apply" value="Apply"/>
+            </form>
+         </div>
     <div class="row">
     <?php
 
+        if(isset($_POST['sortType']))
+        {
+        $sort = $_POST['sortType'];
+
+        if($sort == "PHighToLow"){
+            $sortAtt = "Type.price";
+            $sortOrder = "DESC";
+        }
+        else if($sort == "PLowToHigh"){
+            $sortAtt = "Type.price";
+            $sortOrder = "ASC";
+        }
+        else if($sort == "RHighToLow"){
+            $sortAtt = "reviews_for";
+            $sortOrder = "DESC";
+        }
+        else if($sort == "NZtoA"){
+            $sortAtt = "productName";
+            $sortOrder = "DESC";
+        }
+        else if($sort == "NAtoZ"){
+            $sortAtt = "productName";
+            $sortOrder = "ASC";
+        }
+        }
+        else{
+        $sortAtt = "productName";
+        $sortOrder="ASC";
+        }
+
+
     $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
-    $query = 'SELECT * FROM PRODUCTS ORDER by productId ASC';           // query
+    $query = 'SELECT * FROM PRODUCTS,TYPE WHERE PRODUCTS.productId = TYPE.productId ORDER by '.$sortAtt.' '.$sortOrder; 
     $result = mysqli_query($connect, $query);                       // execute the query
 
     if ($result):
