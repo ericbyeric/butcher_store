@@ -64,11 +64,45 @@
           <h2 class="jumbotron-heading">Beef</h2>
         </div>
       </section>
-
+	  <div class="container"><!--filter portion-->
+        <div class="sorters form-inline mt-2">
+            <h4 class="mt-1 mr-2">Sort by: </h4>
+            <form method="POST" action="./shop_beef.php">
+				<select id="countryFilter" name="countryFilter"> <!--filter by country-->
+                  <option value="Australia" >Australia</option>
+                  <option value="Chile">Chile</option>
+                  <option value="Germany">Germany</option>
+				  <option value="Ireland" >Ireland</option>
+                  <option value="New Zealand">New Zealand</option>
+                  <option value="South Korea">South Korea</option>
+				  <option value="Spain" >Spain</option>
+                  <option value="United States">United States</option>
+				</select>
+				<select id="gradeFilter" name="gradeFilter"> <!--filter by grade; needs to be updated-->
+					<option value="Prime">Prime</option>
+					<option value="Choice">Choice</option>
+					<option value="Select">Select</option>
+				</select>
+               <input type="submit" name="apply" value="Apply"/>
+            </form>
+         </div>
         <div class="row"><!--Load Beef Products-->
 			<?php
+				//Filters without sorting functions
+					if(isset($_POST['countryFilter'])){
+							$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
+					}
+					else{
+						$countryF = '';
+					}
+					if(isset($_POST['gradeFilter'])){
+						$gradeF = ' AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+					}
+					else{
+						$gradeF = '';
+					}
 				$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
-				$query = 'SELECT * FROM PRODUCTS,TYPE WHERE PRODUCTS.productId = TYPE.productId AND type="beef"';
+				$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND type="beef" AND PRODUCTS.country=ORIGIN.country'.$countryF.$gradeF;
 				$result = mysqli_query($connect, $query);                       // execute the query
 				if ($result):
 					if(mysqli_num_rows($result)>0):
@@ -147,7 +181,7 @@
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>
-						<a href="#" class="btn btn-primary btn-block" >Checkout</a>
+						<a href="checkout.php" class="btn btn-primary btn-block" >Checkout</a>
 						<?php endif; endif; ?>
 				</td>
 			</tr>

@@ -61,91 +61,17 @@
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h2 class="jumbotron-heading">Lamb</h2>
+          <h2 class="jumbotron-heading">Your Items</h2>
         </div>
       </section>
-	  <div class="container"><!--filter portion-->
-        <div class="sorters form-inline mt-2">
-            <h4 class="mt-1 mr-2">Sort by: </h4>
-            <form method="POST" action="./shop_lamb.php">
-				<select id="countryFilter" name="countryFilter"> <!--filter by country-->
-                  <option value="Australia" >Australia</option>
-                  <option value="Chile">Chile</option>
-                  <option value="Germany">Germany</option>
-				  <option value="Ireland" >Ireland</option>
-                  <option value="New Zealand">New Zealand</option>
-                  <option value="South Korea">South Korea</option>
-				  <option value="Spain" >Spain</option>
-                  <option value="United States">United States</option>
-				</select>
-				<select id="gradeFilter" name="gradeFilter"> <!--filter by grade; needs to be updated-->
-					<option value="Prime">Prime</option>
-					<option value="Choice">Choice</option>
-					<option value="Select">Select</option>
-				</select>
-               <input type="submit" name="apply" value="Apply"/>
-            </form>
-         </div>
-        <div class="row"><!--Load Lamb Products-->
-			<?php
-				//Filters without sorting functions
-					if(isset($_POST['countryFilter'])){
-							$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
-					}
-					else{
-						$countryF = '';
-					}
-					if(isset($_POST['gradeFilter'])){
-						$gradeF = ' AND TYPE.grade="'.$_POST['gradeFilter'].'"';
-					}
-					else{
-						$gradeF = '';
-					}
-				$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
-				$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND type="lamb" AND PRODUCTS.country=ORIGIN.country'.$countryF.$gradeF;
-				$result = mysqli_query($connect, $query);                       // execute the query
-				if ($result):
-					if(mysqli_num_rows($result)>0):
-						while($product = mysqli_fetch_assoc($result)):          // store result in associtive array
-						?>
-						<div class="col-sm-3 mb-5 mt-4">                         
-							<form method="POST" action="shop_lamb.php?action=add&id=<?php echo $product['productId']; ?>">
-								<div class="products">
-									<!-- PRODUCT IMAGE -->
-									<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
-
-									<!-- PRODUCT NAME -->
-									<h4 class="text-info card-text"> <?php echo $product['productName']; ?> </h4>
-
-									<!-- PRODUCT Weight-->
-									<h5>weight <?php echo $product['productEachWeight'] ?> </h5>
-                        
-									<input type="text" name="quantity" class="form-control" value="1" />
-									<input type="hidden" name="name" value="<?php echo $product['productName']; ?>" >
-									<input type="hidden" name="weight" value="<?php echo $product['productEachWeight']; ?>" >
-									<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-sm btn-outline-secondary" value="Add to Cart" />
-								</div>
-							</form>
-						</div>
-							<?php
-          
-										endwhile;
-									endif;
-								endif;
-								?>
-		</div> 
-
-	<div style="clear:both"></div>
-	<br />
-
-	<div class="table-responsive">      <!-- when window is small, table is scrollable -->
+	  <div class="table-responsive">      <!-- when window is small, table is scrollable -->
 		<table class="table">
 			<tr><th colspan="5"><h3>Order Detail</h3></th></tr>
 			<tr>
 				<th width="40%">Product Name</th>
 				<th width="10%">Quantity</th>
-				<th width="20%">Weight</th>
-				<th width="15%">Total weight</th>
+				<th width="20%">Price per Unit</th>
+				<th width="15%">Total Price</th>
 				<th width="5%">Action</th>
 			</tr>
         
@@ -161,7 +87,7 @@
 				<td><i class="fas fa-pound-sign"></i> <?php echo $product['weight']; ?></td>
 				<td><i class="fas fa-pound-sign"></i> <?php echo number_format($product['quantity'] * $product['weight'], 2); ?></td>
 				<td>
-					<a class="mb-2" href="shop_lamb.php?action=delete&id=<?php echo $product['id']; ?>">
+					<a class="mb-2" href="shop_beef.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
 					</a>
 				</td>
@@ -181,7 +107,7 @@
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>
-						<a href="#" class="btn btn-primary btn-block" >Checkout</a>
+						<a href="thankYou.php" class="btn btn-primary btn-block" >Confirm Order</a>
 						<?php endif; endif; ?>
 				</td>
 			</tr>
@@ -194,5 +120,6 @@
 
 		</div>
 		</div>
-</body>
+
+      
 </main>
