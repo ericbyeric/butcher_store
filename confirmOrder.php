@@ -1,8 +1,22 @@
 <?php
     session_start();
     require "header.php";
-?>
 
+
+    if(isset($_POST['write-review-form'])){
+        $reviewContent = $_POST['reviewContent'];
+        $reviewRating = $_POST['reviewRating'];
+        $reviewProductId = $_POST['reviewProductId'];
+        $reviewUserId = $_SESSION['userId'];
+
+        $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
+        $query = "INSERT INTO REVIEWS_FOR (userId, productId, content, rating) VALUES ('$reviewUserId','$reviewProductId','$reviewContent','$reviewRating')";
+        
+        $connect->query($query);   
+            
+          
+    }
+?>
 
 
 <main role="main">
@@ -28,16 +42,18 @@
 				<th width="10%">Product Name</th>
 
 				<th width="10%">Quantity</th>
-				<th width="20%">Price</th>
-				<th width="15%">Total Price</th>
-				<th width="50%">Action</th>
+				<th width="10%">Price</th>
+				<th width="10%">Total Price</th>
+				<th width="60%">User Review</th>
+                
 			</tr>
         
 			<?php
 			if(!empty($_SESSION['shopping_cart'])):
 				$total = 0;
 
-				foreach($_SESSION['shopping_cart'] as $key => $product):
+                foreach($_SESSION['shopping_cart'] as $key => $product):
+               
 			?>
 			<tr>
 			
@@ -46,11 +62,31 @@
 				<td><?php echo $product['quantity']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
-				<td>
-					<a class="mb-2" href="checkout.php?action=delete&id=<?php echo $product['id']; ?>">
-						<div class="btn btn-danger">Remove</div>
-					</a>
-				</td>
+                
+                <td >
+                    <form method="POST" action="confirmOrder.php" class="form-inline">
+                    <textarea style="width:450px;" name="reviewContent" class="form-control mr-4" id="exampleFormControlTextarea1" rows="3"></textarea>
+                
+                    <div class="col text-center justify-content-center">
+                        <p class="row">Rating</p>
+                        <select class="row mr-4" id="rating" name="reviewRating"> <!--filter by country-->
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                        <input type="hidden" name="reviewProductId" value="<?php echo $product['id']; ?>" >
+                        
+                    </div>
+                
+            
+                    <button type="submit" name="write-review-form" class="btn btn-primary">Write Review</button>
+                 
+                    </form>
+                </td>
+
+                    
 			</tr>
 
 			<?php
@@ -58,16 +94,16 @@
 				endforeach;
 			?>
 			<tr>
-				<td colspan="8" align="right">Total</td>
+				<td colspan="10" align="right">Total</td>
 				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
-				<td colspan="10">
+				<td colspan="12">
 					<?php
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>
-						<a href="confirmOrder.php" class="btn btn-primary btn-block" >Confirm Order</a>
+						<a href="home.php" class="btn btn-success btn-block" >Go Back To Main Page</a>
 						<?php endif; endif; ?>
 				</td>
 			</tr>
