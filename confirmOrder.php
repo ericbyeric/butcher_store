@@ -117,6 +117,8 @@
 			<tr>
 				<td colspan="12">
 					<?php
+
+
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>

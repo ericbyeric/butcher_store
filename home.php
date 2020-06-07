@@ -1,13 +1,19 @@
 <?php
     session_start();
     require "header.php";
+<<<<<<< HEAD
 	if (isset($_POST['goHomeBtn'])){
+=======
+
+
+    if (isset($_POST['goHomeBtn'])){
+>>>>>>> cdc9b6a4e27ea8055954eec8396497df131f9cf0
         unset($_SESSION['shopping_cart']);
     }
 ?>
 
 <link rel="stylesheet" href="css/home.css">
-<section id="explore-head-section">
+        <section id="explore-head-section">
             <!-- ABOUT US -->
             <div class="container">
                 <div class="row">
