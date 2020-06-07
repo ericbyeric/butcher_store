@@ -199,7 +199,7 @@
 		else{
 			$gradeF = '';
 		}
-    $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
+    $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
     $query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country'.$typeF.$countryF.$gradeF.$orderLine;
     $result = mysqli_query($connect, $query);                       // execute the query
 
