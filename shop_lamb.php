@@ -106,10 +106,6 @@
                <input type="submit" name="apply" value="Apply"/>
             </form>
          </div>
-<<<<<<< HEAD
-		
-=======
->>>>>>> a255237bfb1d919fe47f4c7a049c6f1d997d920e
         <div class="row"><!--Load Lamb Products-->
 			<?php
 				//Filters without sorting functions
@@ -151,8 +147,8 @@
 									<!-- PRODUCT NAME -->
 									<h4 class="text-info card-text"> <?php echo $product['productName']; ?> </h4>
 
-									<!-- PRODUCT Weight-->
-									<h5>weight <?php echo $product['productEachWeight'] ?> </h5>
+									<!-- PRODUCT price-->
+									<h5>Price <?php echo $product['price'] ?> </h5>
                         
 									<input type="text" name="quantity" class="form-control" value="1" />
 									<input type="hidden" name="productName" value="<?php echo $product['productName']; ?>" >

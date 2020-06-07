@@ -1,8 +1,5 @@
 <?php
     session_start();
-<<<<<<< HEAD
-    require "header.php";
-=======
     require "header.php";	//save current shopping cart into order table
     $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
 	$query = "SELECT orderId FROM ORDERS ORDER BY orderId DESC LIMIT 1";
@@ -12,12 +9,9 @@
 		$oId = 1;
 	}
 	else{
-		print_r($oId['orderId']);
 		$oId = $oId['orderId'] + "1";
-		print_r($oId);
 	}
 	foreach($_SESSION['shopping_cart'] as $key=>$product){
-		echo $product['id'];
 		$date = strtotime("today");
 		$date = date('Y-m-d',$date);
 		$pId = $product['id'];
@@ -33,11 +27,6 @@
 	$query = "INSERT INTO SHIPMENT(orderId,shipDate,shipCost)
 			  VALUES ('$oId','$deliveryDate','5.50')";
 	$connect->query($query);
-	
-		
-?>
->>>>>>> 2d8dda97255f2b137fecfa7d11ac247b399d7276
-
 
     if(isset($_POST['write-review-form'])){
         $reviewContent = $_POST['reviewContent'];
@@ -45,7 +34,7 @@
         $reviewProductId = $_POST['reviewProductId'];
         $reviewUserId = $_SESSION['userId'];
 
-        $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
+        $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
         $query = "INSERT INTO REVIEWS_FOR (userId, productId, content, rating) VALUES ('$reviewUserId','$reviewProductId','$reviewContent','$reviewRating')";
         
         $connect->query($query);   
@@ -131,17 +120,14 @@
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>
-<<<<<<< HEAD
-						<a href="home.php" class="btn btn-success btn-block" >Go Back To Main Page</a>
-						<?php endif; endif; ?>
-=======
-						<a href="confirmOrder.php" class="btn btn-primary btn-block" >Confirm Order</a>
+						<form method="post" action="home.php">
+							<button type="submit" name="goHomeBtn" class="btn btn-success btn-block" >Go Back To Main Page</button>
+						</form>
+						
 						<?php
-							unset($_SESSION['shopping_cart']);
 							endif; 
 							endif;
 						?>
->>>>>>> 2d8dda97255f2b137fecfa7d11ac247b399d7276
 				</td>
 			</tr>
 			<?php

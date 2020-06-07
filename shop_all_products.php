@@ -214,7 +214,7 @@
 				<form method="POST" action="productDescription.php?action=add&id=<?php echo $product['productId']; ?>">
 					<button style="border:none;" type="submit" name="go_to_product_description">
 						<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
-						<?php $_SESSION['currentProductId'] = $product['id'] ?>
+						<?php $_SESSION['currentProductId'] = $product['productId'] ?>
 					</button>
 				</form>        
 

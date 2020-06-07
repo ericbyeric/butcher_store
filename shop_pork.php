@@ -147,8 +147,8 @@
 									<!-- PRODUCT NAME -->
 									<h4 class="text-info card-text"> <?php echo $product['productName']; ?> </h4>
 
-									<!-- PRODUCT Weight-->
-									<h5>weight <?php echo $product['productEachWeight'] ?> </h5>
+									<!-- PRODUCT price-->
+									<h5>Price <?php echo $product['price'] ?> </h5>
                         
 									<input type="text" name="quantity" class="form-control" value="1" />
 									<input type="hidden" name="productName" value="<?php echo $product['productName']; ?>" >
