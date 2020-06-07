@@ -69,7 +69,8 @@
             <h4 class="mt-1 mr-2">Sort by: </h4>
             <form method="POST" action="./shop_lamb.php">
 				<select id="countryFilter" name="countryFilter"> <!--filter by country-->
-                  <option value="Australia" >Australia</option>
+                  <option value="none" >None</option>
+				  <option value="Australia" >Australia</option>
                   <option value="Chile">Chile</option>
                   <option value="Germany">Germany</option>
 				  <option value="Ireland" >Ireland</option>
@@ -79,6 +80,7 @@
                   <option value="United States">United States</option>
 				</select>
 				<select id="gradeFilter" name="gradeFilter"> <!--filter by grade; needs to be updated-->
+					<option value="none" >None</option>
 					<option value="Prime">Prime</option>
 					<option value="Choice">Choice</option>
 					<option value="Select">Select</option>
@@ -86,18 +88,27 @@
                <input type="submit" name="apply" value="Apply"/>
             </form>
          </div>
-		</div>
         <div class="row"><!--Load Lamb Products-->
 			<?php
 				//Filters without sorting functions
 					if(isset($_POST['countryFilter'])){
-							$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
+							if($_POST['countryFilter']=="none"){
+								$countryF='';
+							}
+							else{
+								$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
+							}
 					}
 					else{
 						$countryF = '';
 					}
 					if(isset($_POST['gradeFilter'])){
-						$gradeF = ' AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+						if($_POST['gradeFilter']=="none"){
+							$gradeF='';
+						}
+						else{
+							$gradeF = ' AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+						}
 					}
 					else{
 						$gradeF = '';
