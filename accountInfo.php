@@ -9,10 +9,10 @@
     
     if (mysqli_query($connect, $query)):
         $result = mysqli_query($connect, $query);                       // execute the query
-      
+        
         //var_dump($result);
         $userInfo = mysqli_fetch_assoc($result);          // store result in associtive array  
-            
+        
     ?>          
 
         <link rel="stylesheet" href="css/home.css">
