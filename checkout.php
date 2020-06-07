@@ -14,9 +14,18 @@
                 $_SESSION['shopping_cart'][$count] = array
                 (
                     'id' => filter_input(INPUT_GET, 'id'),
-                    'name' => filter_input(INPUT_POST, 'name'),
-                    'price' => filter_input(INPUT_POST, 'price'),
-                    'quantity' => filter_input(INPUT_POST, 'quantity')
+					'productName' => filter_input(INPUT_POST, 'productName'),
+					'price' => filter_input(INPUT_POST, 'price'),
+					'quantity' => filter_input(INPUT_POST, 'quantity'),
+					'country' => filter_input(INPUT_POST, 'country'),
+					'grade' => filter_input(INPUT_POST, 'grade'),
+					'aging' => filter_input(INPUT_POST, 'aging'),
+					'stock' => filter_input(INPUT_POST, 'grade'),
+					'type' => filter_input(INPUT_POST, 'grade'),
+					'cut' => filter_input(INPUT_POST, 'grade'),
+					'picture' => filter_input(INPUT_POST, 'grade'),
+					'feed' => filter_input(INPUT_POST, 'grade'),
+					'growingEnv' => filter_input(INPUT_POST, 'grade')
                 );
             } else { // product already exists, increase quantity
                 // if product already exists (match array key to id of the product being added to the cart)
@@ -33,9 +42,18 @@
             $_SESSION['shopping_cart'][0] = array
             (
                 'id' => filter_input(INPUT_GET, 'id'),
-                'name' => filter_input(INPUT_POST, 'name'),
-                'price' => filter_input(INPUT_POST, 'price'),
-                'quantity' => filter_input(INPUT_POST, 'quantity')
+				'productName' => filter_input(INPUT_POST, 'productName'),
+				'price' => filter_input(INPUT_POST, 'price'),
+				'quantity' => filter_input(INPUT_POST, 'quantity'),
+				'country' => filter_input(INPUT_POST, 'country'),
+				'grade' => filter_input(INPUT_POST, 'grade'),
+				'aging' => filter_input(INPUT_POST, 'aging'),
+				'stock' => filter_input(INPUT_POST, 'grade'),
+				'type' => filter_input(INPUT_POST, 'grade'),
+				'cut' => filter_input(INPUT_POST, 'grade'),
+				'picture' => filter_input(INPUT_POST, 'grade'),
+				'feed' => filter_input(INPUT_POST, 'grade'),
+				'growingEnv' => filter_input(INPUT_POST, 'grade')
             );
         }
     }
@@ -99,22 +117,19 @@
 				$total = 0;
 
 				foreach($_SESSION['shopping_cart'] as $key => $product):
-					echo "key:";
-					print_r($key);
-					echo "product:";
-					print_r($product);
 			?>
 			<tr>
-				<td><img src="./img/<?php echo $productInfo['picture'];?>"/></td>
-				<td><?php echo $product['name']; ?></td>
-				<td><?php echo $productInfo['country'];?></td>
-				<td><?php echo $productInfo['grade'];?></td>
-				<td><?php echo $productInfo['aging'];?></td>
+				
+				<td><img height="300" src="./img/<?php echo $product['picture'];?>"/></td>
+				<td><?php echo $product['productName']; ?></td>
+				<td><?php echo $product['country'];?></td>
+				<td><?php echo $product['grade'];?></td>
+				<td><?php echo $product['aging'];?></td>
 				<td><?php echo $product['quantity']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
 				<td>
-					<a class="mb-2" href="shop_beef.php?action=delete&id=<?php echo $product['id']; ?>">
+					<a class="mb-2" href="checkout.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
 					</a>
 				</td>
@@ -125,11 +140,11 @@
 				endforeach;
 			?>
 			<tr>
-				<td colspan="7" align="right">Total</td>
+				<td colspan="8" align="right">Total</td>
 				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
-				<td colspan="8">
+				<td colspan="10">
 					<?php
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):

@@ -14,9 +14,18 @@
                 $_SESSION['shopping_cart'][$count] = array
                 (
                     'id' => filter_input(INPUT_GET, 'id'),
-                    'name' => filter_input(INPUT_POST, 'name'),
-                    'price' => filter_input(INPUT_POST, 'price'),
-                    'quantity' => filter_input(INPUT_POST, 'quantity')
+					'productName' => filter_input(INPUT_POST, 'productName'),
+					'price' => filter_input(INPUT_POST, 'price'),
+					'quantity' => filter_input(INPUT_POST, 'quantity'),
+					'country' => filter_input(INPUT_POST, 'country'),
+					'grade' => filter_input(INPUT_POST, 'grade'),
+					'aging' => filter_input(INPUT_POST, 'aging'),
+					'stock' => filter_input(INPUT_POST, 'stock'),
+					'type' => filter_input(INPUT_POST, 'type'),
+					'cut' => filter_input(INPUT_POST, 'cut'),
+					'picture' => filter_input(INPUT_POST, 'picture'),
+					'feed' => filter_input(INPUT_POST, 'feed'),
+					'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
                 );
             } else { // product already exists, increase quantity
                 // if product already exists (match array key to id of the product being added to the cart)
@@ -33,9 +42,18 @@
             $_SESSION['shopping_cart'][0] = array
             (
                 'id' => filter_input(INPUT_GET, 'id'),
-                'name' => filter_input(INPUT_POST, 'name'),
+                'productName' => filter_input(INPUT_POST, 'productName'),
                 'price' => filter_input(INPUT_POST, 'price'),
-                'quantity' => filter_input(INPUT_POST, 'quantity')
+                'quantity' => filter_input(INPUT_POST, 'quantity'),
+				'country' => filter_input(INPUT_POST, 'country'),
+				'grade' => filter_input(INPUT_POST, 'grade'),
+				'aging' => filter_input(INPUT_POST, 'aging'),
+				'stock' => filter_input(INPUT_POST, 'stock'),
+				'type' => filter_input(INPUT_POST, 'type'),
+				'cut' => filter_input(INPUT_POST, 'cut'),
+				'picture' => filter_input(INPUT_POST, 'picture'),
+				'feed' => filter_input(INPUT_POST, 'feed'),
+				'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
             );
         }
     }
@@ -69,6 +87,7 @@
             <h4 class="mt-1 mr-2">Sort by: </h4>
             <form method="POST" action="./shop_beef.php">
 				<select id="countryFilter" name="countryFilter"> <!--filter by country-->
+				  <option value="none" >None</option>
                   <option value="Australia" >Australia</option>
                   <option value="Chile">Chile</option>
                   <option value="Germany">Germany</option>
@@ -79,6 +98,7 @@
                   <option value="United States">United States</option>
 				</select>
 				<select id="gradeFilter" name="gradeFilter"> <!--filter by grade; needs to be updated-->
+					<option value="none" >None</option>
 					<option value="Prime">Prime</option>
 					<option value="Choice">Choice</option>
 					<option value="Select">Select</option>
@@ -90,13 +110,23 @@
 			<?php
 				//Filters without sorting functions
 					if(isset($_POST['countryFilter'])){
-							$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
+							if($_POST['countryFilter']=="none"){
+								$countryF='';
+							}
+							else{
+								$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
+							}
 					}
 					else{
 						$countryF = '';
 					}
 					if(isset($_POST['gradeFilter'])){
-						$gradeF = ' AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+						if($_POST['gradeFilter']=="none"){
+							$gradeF='';
+						}
+						else{
+							$gradeF = ' AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+						}
 					}
 					else{
 						$gradeF = '';
@@ -120,8 +150,19 @@
 									<!-- PRODUCT Weight-->
                         
 									<input type="text" name="quantity" class="form-control" value="1" />
-									<input type="hidden" name="name" value="<?php echo $product['productName']; ?>" >
+									<input type="hidden" name="productName" value="<?php echo $product['productName']; ?>" >
+									<input type="hidden" name="productId" value="<?php echo $product['productId']; ?>" >							<!--Changed Weight Variable to price -Martin -->
+									<input type="hidden" name="productEachWeight" value="<?php echo $product['productEachWeight']; ?>" >
+									<input type="hidden" name="country" value="<?php echo $product['country']; ?>" >
+									<input type="hidden" name="picture" value="<?php echo $product['picture']; ?>" >
+									<input type="hidden" name="stock" value="<?php echo $product['stock']; ?>" >
+									<input type="hidden" name="type" value="<?php echo $product['type']; ?>" >
+									<input type="hidden" name="cut" value="<?php echo $product['cut']; ?>" >
+									<input type="hidden" name="aging" value="<?php echo $product['aging']; ?>" >
 									<input type="hidden" name="price" value="<?php echo $product['price']; ?>" >
+									<input type="hidden" name="grade" value="<?php echo $product['grade']; ?>" >
+									<input type="hidden" name="growingEnv" value="<?php echo $product['growingEnv']; ?>" >
+									<input type="hidden" name="feed" value="<?php echo $product['feed']; ?>" >
 									<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-sm btn-outline-secondary" value="Add to Cart" />
 								</div>
 							</form>
@@ -155,7 +196,7 @@
 				foreach($_SESSION['shopping_cart'] as $key => $product):
 			?>
 			<tr>
-				<td><?php echo $product['name']; ?></td>
+				<td><?php echo $product['productName']; ?></td>
 				<td><?php echo $product['quantity']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
