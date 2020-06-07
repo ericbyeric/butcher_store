@@ -20,12 +20,12 @@
 					'country' => filter_input(INPUT_POST, 'country'),
 					'grade' => filter_input(INPUT_POST, 'grade'),
 					'aging' => filter_input(INPUT_POST, 'aging'),
-					'stock' => filter_input(INPUT_POST, 'grade'),
-					'type' => filter_input(INPUT_POST, 'grade'),
-					'cut' => filter_input(INPUT_POST, 'grade'),
-					'picture' => filter_input(INPUT_POST, 'grade'),
-					'feed' => filter_input(INPUT_POST, 'grade'),
-					'growingEnv' => filter_input(INPUT_POST, 'grade')
+					'stock' => filter_input(INPUT_POST, 'stock'),
+					'type' => filter_input(INPUT_POST, 'type'),
+					'cut' => filter_input(INPUT_POST, 'cut'),
+					'picture' => filter_input(INPUT_POST, 'picture'),
+					'feed' => filter_input(INPUT_POST, 'feed'),
+					'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
                 );
             } else { // product already exists, increase quantity
                 // if product already exists (match array key to id of the product being added to the cart)
@@ -48,12 +48,12 @@
 				'country' => filter_input(INPUT_POST, 'country'),
 				'grade' => filter_input(INPUT_POST, 'grade'),
 				'aging' => filter_input(INPUT_POST, 'aging'),
-				'stock' => filter_input(INPUT_POST, 'grade'),
-				'type' => filter_input(INPUT_POST, 'grade'),
-				'cut' => filter_input(INPUT_POST, 'grade'),
-				'picture' => filter_input(INPUT_POST, 'grade'),
-				'feed' => filter_input(INPUT_POST, 'grade'),
-				'growingEnv' => filter_input(INPUT_POST, 'grade')
+				'stock' => filter_input(INPUT_POST, 'stock'),
+				'type' => filter_input(INPUT_POST, 'type'),
+				'cut' => filter_input(INPUT_POST, 'cut'),
+				'picture' => filter_input(INPUT_POST, 'picture'),
+				'feed' => filter_input(INPUT_POST, 'feed'),
+				'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
             );
         }
     }
@@ -124,11 +124,11 @@
 				endforeach;
 			?>
 			<tr>
-				<td colspan="8" align="right">Total</td>
+				<td colspan="10" align="right">Total</td>
 				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
-				<td colspan="10">
+				<td colspan="12">
 					<?php
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):

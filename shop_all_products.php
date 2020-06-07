@@ -98,7 +98,7 @@
 
 	<div class="container">
         <div class="sorters form-inline mt-2">
-            <h4 class="mt-1 mr-2">Sort by: </h4>
+            <h4 class="mt-2 mr-2">Sort by: </h4>
             <form method="POST" action="./shop_all_products.php">
 
                <select id="sortType" name="sortType">	<!--sort by price, rating, or name-->
@@ -209,12 +209,17 @@
                
             ?>
             
-            <div class="col-sm-3 mb-5 mt-4">                         
+            <div class="col-sm-3 mb-5 mt-3">   
+				<!-- PRODUCT IMAGE WORK AS BOTTON TO GO TO -->
+				<form method="POST" action="productDescription.php?action=add&id=<?php echo $product['productId']; ?>">
+					<button style="border:none;" type="submit" name="go_to_product_description">
+						<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
+					</button>
+				</form>        
+
                 <form method="POST" action="shop_all_products.php?action=add&id=<?php echo $product['productId']; ?>">
                     <div class="products">
-                        <!-- PRODUCT IMAGE -->
-                        <img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
-
+                        
                         <!-- PRODUCT NAME -->
                         <h4 class="text-info card-text"> <?php echo $product['productName']; ?> </h4>
 

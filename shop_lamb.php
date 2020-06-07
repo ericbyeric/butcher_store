@@ -106,6 +106,10 @@
                <input type="submit" name="apply" value="Apply"/>
             </form>
          </div>
+<<<<<<< HEAD
+		
+=======
+>>>>>>> a255237bfb1d919fe47f4c7a049c6f1d997d920e
         <div class="row"><!--Load Lamb Products-->
 			<?php
 				//Filters without sorting functions
