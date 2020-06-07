@@ -56,6 +56,26 @@
         
     }
 ?>
+	<script type="text/javascript">
+		function changeGradeSystem(f1,f2){
+			var f1 = document.getElementById(f1);
+			var f2 = document.getElementById(f2);
+			f2.innerHTML = "";
+			if(f1.value=="beef" || f1.value=="lamb"){
+				var optionArray = ["none|None","Prime|Prime","Choice|Choice","Select|Select"];
+			}
+			if(f1.value=="pork"){
+				var optionArray = ["none|None","1|1","2|2","3|3"];
+			}
+			for(var option in optionArray){
+				var nameVal = optionArray[option].split("|");
+				var nOp = document.createElement("option");
+				nOp.value = nameVal[0];
+				nOp.innerHTML = nameVal[1];
+				f2.options.add(nOp);
+			}
+		}
+	</script>
 
 	<div class="container">
         <div class="sorters form-inline mt-2">
@@ -63,19 +83,22 @@
             <form method="POST" action="./shop_all_products.php">
 
                <select id="sortType" name="sortType">	<!--sort by price, rating, or name-->
-                  <option value="PHighToLow" >Price High to Low</option>
+                  <option value="none" >None</option>
+				  <option value="PHighToLow" >Price High to Low</option>
                   <option value="PLowToHigh">Price Low to High</option>
                   <option value="RHighToLow">Rating High to Low</option>
                   <option value="NAtoZ">Name A to Z</option>
                   <option value="NZtoA">Name Z to A</option>
 				</select>
-				<select id="typeFilter" name="typeFilter" onchange=<?php $typefilter=value?>> <!--filter by beef,pork, or lamb-->
-                  <option value="beef"><?php $typefilter="beef";?> Beef</option>
+				<select id="typeFilter" name="typeFilter" onchange="changeGradeSystem('typeFilter','gradeFilter')"> <!--filter by beef,pork, or lamb-->
+                  <option value="none" >None</option>
+				  <option value="beef"><?php $typefilter="beef";?> Beef</option>
                   <option value="pork"><?php $typefilter="pork";?>Pork</option>
                   <option value="lamb"><?php $typefilter="lamb";?>Lamb</option>
 				</select>
 				<select id="countryFilter" name="countryFilter"> <!--filter by country-->
-                  <option value="Australia" >Australia</option>
+                  <option value="none" >None</option>
+				  <option value="Australia" >Australia</option>
                   <option value="Chile">Chile</option>
                   <option value="Germany">Germany</option>
 				  <option value="Ireland" >Ireland</option>
@@ -85,19 +108,6 @@
                   <option value="United States">United States</option>
 				</select>
 				<select id="gradeFilter" name="gradeFilter"> <!--filter by grade; needs to be updated-->
-				  <?php
-					echo $typefilter;
-					if($_POST['typeFilter']=="beef"||$_POST['typeFilter']=="lamb"){
-						echo '<option value="Prime">Prime</option>';
-						echo '<option value="Choice">Choice</option>';
-						echo '<option value="Select">Select</option>';
-					}
-					if($_POST['typeFilter']=="pork"){
-						echo '<option value="1">1</option>';
-						echo '<option value="2">2</option>';
-						echo '<option value="3">3</option>';
-					}
-					?>
 				</select>
                <input type="submit" name="apply" value="Apply"/>
             </form>
@@ -138,19 +148,34 @@
 		$orderLine =' ORDER by '.$sortAtt.' '.$sortOrder;
 	
 		if(isset($_POST['typeFilter'])){
-			$typeF = ' AND type="'.$_POST['typeFilter'].'"';
+			if($_POST['typeFilter']=="none"){
+				$typeF='';
+			}
+			else{
+				$typeF = ' AND type="'.$_POST['typeFilter'].'"';
+			}
 		}
 		else{
 			$typeF = '';
 		}
 		if(isset($_POST['countryFilter'])){
+			if($_POST['countryFilter']=="none"){
+				$countryF='';
+			}
+			else{
 				$countryF = ' AND ORIGIN.country="'.$_POST['countryFilter'].'"';
+			}
 		}
 		else{
 			$countryF = '';
 		}
 		if(isset($_POST['gradeFilter'])){
-			$gradeF = 'AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+			if($_POST['gradeFilter']=="none"){
+				$gradeF = '';
+			}
+			else{
+				$gradeF = 'AND TYPE.grade="'.$_POST['gradeFilter'].'"';
+			}
 		}
 		else{
 			$gradeF = '';
@@ -165,12 +190,17 @@
                
             ?>
             
-            <div class="col-sm-3 mb-5 mt-3">                         
+            <div class="col-sm-3 mb-5 mt-3">   
+				<!-- PRODUCT IMAGE WORK AS BOTTON TO GO TO -->
+				<form method="POST" action="productDescription.php?action=add&id=<?php echo $product['productId']; ?>">
+					<button style="border:none;" type="submit" name="go_to_product_description">
+						<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
+					</button>
+				</form>        
+
                 <form method="POST" action="shop_all_products.php?action=add&id=<?php echo $product['productId']; ?>">
                     <div class="products">
-                        <!-- PRODUCT IMAGE -->
-                        <img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
-
+                        
                         <!-- PRODUCT NAME -->
                         <h4 class="text-info card-text"> <?php echo $product['productName']; ?> </h4>
 

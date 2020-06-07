@@ -101,7 +101,7 @@
 					else{
 						$gradeF = '';
 					}
-				$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+				$connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
 				$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND type="pork" AND PRODUCTS.country=ORIGIN.country'.$countryF.$gradeF;
 				$result = mysqli_query($connect, $query);                       // execute the query
 				if ($result):
@@ -140,7 +140,6 @@
 
 	<div class="table-responsive">      <!-- when window is small, table is scrollable -->
 		<table class="table">			<!--Editted Shopping Cart to show price instead of weight -Martin-->
-			<?php print_r($_SESSION);?>
 			<tr><th colspan="5"><h3>Order Detail</h3></th></tr>
 			<tr>
 				<th width="40%">Product Name</th>

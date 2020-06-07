@@ -74,7 +74,7 @@
 			array_push($nameList,$prodName['name']);
 		endforeach;
 		foreach($prodArray as $key):							//Iterate over entire product table to check which are in shopping cart -Martin
-			if(in_array($key['productName'],$nameList)){
+			if(in_array($key['productName'], $nameList)){
 				$productInfo = $key;							//Assign entire information about products in shopping cart -Martin
 			}
 		endforeach;
@@ -99,6 +99,10 @@
 				$total = 0;
 
 				foreach($_SESSION['shopping_cart'] as $key => $product):
+					echo "key:";
+					print_r($key);
+					echo "product:";
+					print_r($product);
 			?>
 			<tr>
 				<td><img src="./img/<?php echo $productInfo['picture'];?>"/></td>

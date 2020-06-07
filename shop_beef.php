@@ -101,7 +101,7 @@
 					else{
 						$gradeF = '';
 					}
-				$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+				$connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
 				$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND type="beef" AND PRODUCTS.country=ORIGIN.country'.$countryF.$gradeF;
 				$result = mysqli_query($connect, $query);                       // execute the query
 				if ($result):
@@ -172,7 +172,7 @@
 			?>
 			<tr>
 				<td colspan="3" align="right">Total</td>
-				<td align="right"><i class="fas fa-pound-sign"></i> <?php echo number_format($total, 2); ?></td>
+				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
 				<td colspan="5">
