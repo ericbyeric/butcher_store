@@ -1,10 +1,15 @@
 <?php
     session_start();
     require "header.php";
+
+
+    if (isset($_POST['goHomeBtn'])){
+        unset($_SESSION['shopping_cart']);
+    }
 ?>
 
 <link rel="stylesheet" href="css/home.css">
-<section id="explore-head-section">
+        <section id="explore-head-section">
             <!-- ABOUT US -->
             <div class="container">
                 <div class="row">

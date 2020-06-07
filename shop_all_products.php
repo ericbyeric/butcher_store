@@ -1,4 +1,5 @@
 <?php
+	
     require "header.php";
     
     // CHECK IF Add to Cart button has been submitted
@@ -199,7 +200,7 @@
 		else{
 			$gradeF = '';
 		}
-    $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+    $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
     $query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country'.$typeF.$countryF.$gradeF.$orderLine;
     $result = mysqli_query($connect, $query);                       // execute the query
 
@@ -211,10 +212,9 @@
             
             <div class="col-sm-3 mb-5 mt-3">   
 				<!-- PRODUCT IMAGE WORK AS BOTTON TO GO TO -->
-				<form method="POST" action="productDescription.php?action=add&id=<?php echo $product['productId']; ?>">
+				<form method="POST" action="productDescription.php?action=productDetail&id=<?php echo $product['productId']; ?>">
 					<button style="border:none;" type="submit" name="go_to_product_description">
 						<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
-						<?php $_SESSION['currentProductId'] = $product['id'] ?>
 					</button>
 				</form>        
 

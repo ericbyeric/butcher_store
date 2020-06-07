@@ -131,7 +131,7 @@
 					else{
 						$gradeF = '';
 					}
-				$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+				$connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
 				$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND type="beef" AND PRODUCTS.country=ORIGIN.country'.$countryF.$gradeF;
 				$result = mysqli_query($connect, $query);                       // execute the query
 				if ($result):
@@ -139,10 +139,15 @@
 						while($product = mysqli_fetch_assoc($result)):          // store result in associtive array
 						?>
 						<div class="col-sm-3 mb-5 mt-4"> 
+
+						<form method="POST" action="productDescription.php?action=productDetail&id=<?php echo $product['productId']; ?>">
+							<button style="border:none;" type="submit" name="go_to_product_description">
+								<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
+							</button>
+						</form>
 							<form method="POST" action="shop_beef.php?action=add&id=<?php echo $product['productId']; ?>">
 								<div class="products">
-									<!-- PRODUCT IMAGE -->
-									<img src="./img/<?php echo $product['picture']; ?>" class="img-responsive card-img-top"  />
+							
 
 									<!-- PRODUCT NAME -->
 									<h4 class="text-info card-text"> <?php echo $product['productName']; ?> </h4>
