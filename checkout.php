@@ -65,7 +65,7 @@
         </div>
       </section>
 	  <?php 
-		$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+		$connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
 		$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country';
 		$result = mysqli_query($connect, $query);                       // execute the query
 		$prodArray = mysqli_fetch_all($result,MYSQLI_ASSOC);				//load all products into an assoc array -Martin

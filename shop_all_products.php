@@ -59,7 +59,7 @@
 
 	<div class="container">
         <div class="sorters form-inline mt-2">
-            <h4 class="mt-1 mr-2">Sort by: </h4>
+            <h4 class="mt-2 mr-2">Sort by: </h4>
             <form method="POST" action="./shop_all_products.php">
 
                <select id="sortType" name="sortType">	<!--sort by price, rating, or name-->
@@ -155,7 +155,7 @@
 		else{
 			$gradeF = '';
 		}
-    $connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+    $connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
     $query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country'.$typeF.$countryF.$gradeF.$orderLine;
     $result = mysqli_query($connect, $query);                       // execute the query
 
@@ -165,7 +165,7 @@
                
             ?>
             
-            <div class="col-sm-3 mb-5 mt-4">                         
+            <div class="col-sm-3 mb-5 mt-3">                         
                 <form method="POST" action="shop_all_products.php?action=add&id=<?php echo $product['productId']; ?>">
                     <div class="products">
                         <!-- PRODUCT IMAGE -->
