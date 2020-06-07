@@ -14,9 +14,19 @@
                 $_SESSION['shopping_cart'][$count] = array
                 (
                     'id' => filter_input(INPUT_GET, 'id'),
-                    'name' => filter_input(INPUT_POST, 'name'),
+                    'productName' => filter_input(INPUT_POST, 'productName'),
                     'price' => filter_input(INPUT_POST, 'price'),
-                    'quantity' => filter_input(INPUT_POST, 'quantity')
+                    'quantity' => filter_input(INPUT_POST, 'quantity'),
+					'country' => filter_input(INPUT_POST, 'country'),
+					'grade' => filter_input(INPUT_POST, 'grade'),
+					'aging' => filter_input(INPUT_POST, 'aging'),
+					'stock' => filter_input(INPUT_POST, 'stock'),
+					'type' => filter_input(INPUT_POST, 'type'),
+					'cut' => filter_input(INPUT_POST, 'cut'),
+					'picture' => filter_input(INPUT_POST, 'picture'),
+					'feed' => filter_input(INPUT_POST, 'feed'),
+					'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
+					
                 );
             } else { // product already exists, increase quantity
                 // if product already exists (match array key to id of the product being added to the cart)
@@ -33,9 +43,18 @@
             $_SESSION['shopping_cart'][0] = array
             (
                 'id' => filter_input(INPUT_GET, 'id'),
-                'name' => filter_input(INPUT_POST, 'name'),
+                'productName' => filter_input(INPUT_POST, 'productName'),
                 'price' => filter_input(INPUT_POST, 'price'),
-                'quantity' => filter_input(INPUT_POST, 'quantity')
+                'quantity' => filter_input(INPUT_POST, 'quantity'),
+				'country' => filter_input(INPUT_POST, 'country'),
+				'grade' => filter_input(INPUT_POST, 'grade'),
+				'aging' => filter_input(INPUT_POST, 'aging'),
+				'stock' => filter_input(INPUT_POST, 'stock'),
+				'type' => filter_input(INPUT_POST, 'type'),
+				'cut' => filter_input(INPUT_POST, 'cut'),
+				'picture' => filter_input(INPUT_POST, 'picture'),
+				'feed' => filter_input(INPUT_POST, 'feed'),
+				'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
             );
         }
     }
@@ -256,7 +275,7 @@
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
 				<td>
-					<a class="mb-2" href="shop_beef.php?action=delete&id=<?php echo $product['id']; ?>">
+					<a class="mb-2" href="shop_all_products.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
 					</a>
 				</td>

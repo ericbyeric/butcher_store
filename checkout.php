@@ -14,9 +14,18 @@
                 $_SESSION['shopping_cart'][$count] = array
                 (
                     'id' => filter_input(INPUT_GET, 'id'),
-                    'name' => filter_input(INPUT_POST, 'name'),
-                    'price' => filter_input(INPUT_POST, 'price'),
-                    'quantity' => filter_input(INPUT_POST, 'quantity')
+					'productName' => filter_input(INPUT_POST, 'productName'),
+					'price' => filter_input(INPUT_POST, 'price'),
+					'quantity' => filter_input(INPUT_POST, 'quantity'),
+					'country' => filter_input(INPUT_POST, 'country'),
+					'grade' => filter_input(INPUT_POST, 'grade'),
+					'aging' => filter_input(INPUT_POST, 'aging'),
+					'stock' => filter_input(INPUT_POST, 'grade'),
+					'type' => filter_input(INPUT_POST, 'grade'),
+					'cut' => filter_input(INPUT_POST, 'grade'),
+					'picture' => filter_input(INPUT_POST, 'grade'),
+					'feed' => filter_input(INPUT_POST, 'grade'),
+					'growingEnv' => filter_input(INPUT_POST, 'grade')
                 );
             } else { // product already exists, increase quantity
                 // if product already exists (match array key to id of the product being added to the cart)
@@ -33,9 +42,18 @@
             $_SESSION['shopping_cart'][0] = array
             (
                 'id' => filter_input(INPUT_GET, 'id'),
-                'name' => filter_input(INPUT_POST, 'name'),
-                'price' => filter_input(INPUT_POST, 'price'),
-                'quantity' => filter_input(INPUT_POST, 'quantity')
+				'productName' => filter_input(INPUT_POST, 'productName'),
+				'price' => filter_input(INPUT_POST, 'price'),
+				'quantity' => filter_input(INPUT_POST, 'quantity'),
+				'country' => filter_input(INPUT_POST, 'country'),
+				'grade' => filter_input(INPUT_POST, 'grade'),
+				'aging' => filter_input(INPUT_POST, 'aging'),
+				'stock' => filter_input(INPUT_POST, 'grade'),
+				'type' => filter_input(INPUT_POST, 'grade'),
+				'cut' => filter_input(INPUT_POST, 'grade'),
+				'picture' => filter_input(INPUT_POST, 'grade'),
+				'feed' => filter_input(INPUT_POST, 'grade'),
+				'growingEnv' => filter_input(INPUT_POST, 'grade')
             );
         }
     }
@@ -64,21 +82,6 @@
           <h2 class="jumbotron-heading">Your Items</h2>
         </div>
       </section>
-	  <?php 
-		$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
-		$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country';
-		$result = mysqli_query($connect, $query);                       // execute the query
-		$prodArray = mysqli_fetch_all($result,MYSQLI_ASSOC);				//load all products into an assoc array -Martin
-		$nameList=[];
-		foreach($_SESSION['shopping_cart'] as $prodName):				//load names of products in shopping cart -Martin
-			array_push($nameList,$prodName['name']);
-		endforeach;
-		foreach($prodArray as $key):							//Iterate over entire product table to check which are in shopping cart -Martin
-			if(in_array($key['productName'],$nameList)){
-				$productInfo = $key;							//Assign entire information about products in shopping cart -Martin
-			}
-		endforeach;
-		?>
 	  <div class="table-responsive">      <!-- when window is small, table is scrollable -->
 		<table class="table">			<!--Editted Shopping Cart to show price instead of weight -Martin-->
 			<tr><th colspan="7"><h3>Items</h3></th></tr>
@@ -99,22 +102,19 @@
 				$total = 0;
 
 				foreach($_SESSION['shopping_cart'] as $key => $product):
-					echo "key:";
-					print_r($key);
-					echo "product:";
-					print_r($product);
 			?>
 			<tr>
-				<td><img src="./img/<?php echo $productInfo['picture'];?>"/></td>
-				<td><?php echo $product['name']; ?></td>
-				<td><?php echo $productInfo['country'];?></td>
-				<td><?php echo $productInfo['grade'];?></td>
-				<td><?php echo $productInfo['aging'];?></td>
+				<?php echo $product['picture'];?>
+				<td><img src="./img/<?php echo $product['picture'];?>"/></td>
+				<td><?php echo $product['productName']; ?></td>
+				<td><?php echo $product['country'];?></td>
+				<td><?php echo $product['grade'];?></td>
+				<td><?php echo $product['aging'];?></td>
 				<td><?php echo $product['quantity']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
 				<td>
-					<a class="mb-2" href="shop_beef.php?action=delete&id=<?php echo $product['id']; ?>">
+					<a class="mb-2" href="checkout.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
 					</a>
 				</td>
