@@ -133,7 +133,9 @@
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>
-						<a href="checkout.php" class="btn btn-primary btn-block" >Confirm Order</a>
+					<form method="POST" action="myOrder.php">
+						<a href="myOrder.php" class="btn btn-primary btn-block" >Confirm Order</a>
+					</form>
 						<?php endif; endif; ?>
 				</td>
 			</tr>
