@@ -20,12 +20,12 @@
 					'country' => filter_input(INPUT_POST, 'country'),
 					'grade' => filter_input(INPUT_POST, 'grade'),
 					'aging' => filter_input(INPUT_POST, 'aging'),
-					'stock' => filter_input(INPUT_POST, 'grade'),
-					'type' => filter_input(INPUT_POST, 'grade'),
-					'cut' => filter_input(INPUT_POST, 'grade'),
-					'picture' => filter_input(INPUT_POST, 'grade'),
-					'feed' => filter_input(INPUT_POST, 'grade'),
-					'growingEnv' => filter_input(INPUT_POST, 'grade')
+					'stock' => filter_input(INPUT_POST, 'stock'),
+					'type' => filter_input(INPUT_POST, 'type'),
+					'cut' => filter_input(INPUT_POST, 'cut'),
+					'picture' => filter_input(INPUT_POST, 'picture'),
+					'feed' => filter_input(INPUT_POST, 'feed'),
+					'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
                 );
             } else { // product already exists, increase quantity
                 // if product already exists (match array key to id of the product being added to the cart)
@@ -48,12 +48,12 @@
 				'country' => filter_input(INPUT_POST, 'country'),
 				'grade' => filter_input(INPUT_POST, 'grade'),
 				'aging' => filter_input(INPUT_POST, 'aging'),
-				'stock' => filter_input(INPUT_POST, 'grade'),
-				'type' => filter_input(INPUT_POST, 'grade'),
-				'cut' => filter_input(INPUT_POST, 'grade'),
-				'picture' => filter_input(INPUT_POST, 'grade'),
-				'feed' => filter_input(INPUT_POST, 'grade'),
-				'growingEnv' => filter_input(INPUT_POST, 'grade')
+				'stock' => filter_input(INPUT_POST, 'stock'),
+				'type' => filter_input(INPUT_POST, 'type'),
+				'cut' => filter_input(INPUT_POST, 'cut'),
+				'picture' => filter_input(INPUT_POST, 'picture'),
+				'feed' => filter_input(INPUT_POST, 'feed'),
+				'growingEnv' => filter_input(INPUT_POST, 'growingEnv')
             );
         }
     }
@@ -82,34 +82,19 @@
           <h2 class="jumbotron-heading">Your Items</h2>
         </div>
       </section>
-	  <?php 
-		$connect = mysqli_connect('localhost', 'root', 'root', 'butcherStore'); // connection
-		$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country';
-		$result = mysqli_query($connect, $query);                       // execute the query
-		$prodArray = mysqli_fetch_all($result,MYSQLI_ASSOC);				//load all products into an assoc array -Martin
-		$nameList=[];
-		foreach($_SESSION['shopping_cart'] as $prodName):				//load names of products in shopping cart -Martin
-			array_push($nameList,$prodName['name']);
-		endforeach;
-		foreach($prodArray as $key):							//Iterate over entire product table to check which are in shopping cart -Martin
-			if(in_array($key['productName'], $nameList)){
-				$productInfo = $key;							//Assign entire information about products in shopping cart -Martin
-			}
-		endforeach;
-		?>
 	  <div class="table-responsive">      <!-- when window is small, table is scrollable -->
 		<table class="table">			<!--Editted Shopping Cart to show price instead of weight -Martin-->
-			<tr><th colspan="7"><h3>Items</h3></th></tr>
+			<tr><th colspan="15"><h3>Items</h3></th></tr>
 			<tr>						<!--Added detail info about products with product picture-->
 				<th width="10%"></th>
-				<th width="40%">Product Name</th>
+				<th width="20%">Product Name</th>
 				<th width="10%">Country</th>
 				<th width="10%">Grade</th>
 				<th width="10%">Aging</th>
 				<th width="10%">Quantity</th>
-				<th width="20%">Price</th>
-				<th width="15%">Total Price</th>
-				<th width="5%">Action</th>
+				<th width="10%">Price</th>
+				<th colspan="3" width="15%">Total Price</th>
+				<th align="right" width="5%">Action</th>
 			</tr>
         
 			<?php
@@ -119,7 +104,6 @@
 				foreach($_SESSION['shopping_cart'] as $key => $product):
 			?>
 			<tr>
-				
 				<td><img height="300" src="./img/<?php echo $product['picture'];?>"/></td>
 				<td><?php echo $product['productName']; ?></td>
 				<td><?php echo $product['country'];?></td>
@@ -127,7 +111,7 @@
 				<td><?php echo $product['aging'];?></td>
 				<td><?php echo $product['quantity']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
-				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
+				<td colspan="3"><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
 				<td>
 					<a class="mb-2" href="checkout.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
@@ -140,11 +124,11 @@
 				endforeach;
 			?>
 			<tr>
-				<td colspan="8" align="right">Total</td>
+				<td colspan="10" align="right">Total</td>
 				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
-				<td colspan="10">
+				<td colspan="12">
 					<?php
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
