@@ -172,7 +172,7 @@
 			?>
 			<tr>
 				<td colspan="3" align="right">Total</td>
-				<td align="right"><i class="fas fa-pound-sign"></i> <?php echo number_format($total, 2); ?></td>
+				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
 				<td colspan="5">

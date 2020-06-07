@@ -86,6 +86,7 @@
                <input type="submit" name="apply" value="Apply"/>
             </form>
          </div>
+		</div>
         <div class="row"><!--Load Lamb Products-->
 			<?php
 				//Filters without sorting functions
@@ -127,7 +128,7 @@
 								</div>
 							</form>
 						</div>
-							<?phpS
+							<?php
           
 										endwhile;
 									endif;
@@ -191,8 +192,6 @@
 
 
 		</table>
-
-		</div>
-		</div>
+	</div>						
 </body>
 </main>

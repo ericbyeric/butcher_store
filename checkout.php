@@ -99,6 +99,10 @@
 				$total = 0;
 
 				foreach($_SESSION['shopping_cart'] as $key => $product):
+					echo "key:";
+					print_r($key);
+					echo "product:";
+					print_r($product);
 			?>
 			<tr>
 				<td><img src="./img/<?php echo $productInfo['picture'];?>"/></td>
