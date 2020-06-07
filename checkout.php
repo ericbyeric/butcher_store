@@ -84,17 +84,17 @@
       </section>
 	  <div class="table-responsive">      <!-- when window is small, table is scrollable -->
 		<table class="table">			<!--Editted Shopping Cart to show price instead of weight -Martin-->
-			<tr><th colspan="7"><h3>Items</h3></th></tr>
+			<tr><th colspan="15"><h3>Items</h3></th></tr>
 			<tr>						<!--Added detail info about products with product picture-->
 				<th width="10%"></th>
-				<th width="40%">Product Name</th>
+				<th width="20%">Product Name</th>
 				<th width="10%">Country</th>
 				<th width="10%">Grade</th>
 				<th width="10%">Aging</th>
 				<th width="10%">Quantity</th>
-				<th width="20%">Price</th>
-				<th width="15%">Total Price</th>
-				<th width="5%">Action</th>
+				<th width="10%">Price</th>
+				<th colspan="3" width="15%">Total Price</th>
+				<th align="right" width="5%">Action</th>
 			</tr>
         
 			<?php
@@ -104,15 +104,14 @@
 				foreach($_SESSION['shopping_cart'] as $key => $product):
 			?>
 			<tr>
-				<?php echo $product['picture'];?>
-				<td><img src="./img/<?php echo $product['picture'];?>"/></td>
+				<td><img height="300" src="./img/<?php echo $product['picture'];?>"/></td>
 				<td><?php echo $product['productName']; ?></td>
 				<td><?php echo $product['country'];?></td>
 				<td><?php echo $product['grade'];?></td>
 				<td><?php echo $product['aging'];?></td>
 				<td><?php echo $product['quantity']; ?></td>
 				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
-				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
+				<td colspan="3"><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
 				<td>
 					<a class="mb-2" href="checkout.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
@@ -125,11 +124,11 @@
 				endforeach;
 			?>
 			<tr>
-				<td colspan="7" align="right">Total</td>
+				<td colspan="8" align="right">Total</td>
 				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
-				<td colspan="8">
+				<td colspan="10">
 					<?php
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
