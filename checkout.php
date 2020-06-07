@@ -15,7 +15,7 @@
                 (
                     'id' => filter_input(INPUT_GET, 'id'),
                     'name' => filter_input(INPUT_POST, 'name'),
-                    'weight' => filter_input(INPUT_POST, 'weight'),
+                    'price' => filter_input(INPUT_POST, 'price'),
                     'quantity' => filter_input(INPUT_POST, 'quantity')
                 );
             } else { // product already exists, increase quantity
@@ -34,7 +34,7 @@
             (
                 'id' => filter_input(INPUT_GET, 'id'),
                 'name' => filter_input(INPUT_POST, 'name'),
-                'weight' => filter_input(INPUT_POST, 'weight'),
+                'price' => filter_input(INPUT_POST, 'price'),
                 'quantity' => filter_input(INPUT_POST, 'quantity')
             );
         }
@@ -64,13 +64,32 @@
           <h2 class="jumbotron-heading">Your Items</h2>
         </div>
       </section>
+	  <?php 
+		$connect = mysqli_connect('localhost', 'root', '', 'butcherStore'); // connection
+		$query = 'SELECT * FROM PRODUCTS,TYPE,ORIGIN WHERE PRODUCTS.productId = TYPE.productId AND PRODUCTS.country=ORIGIN.country';
+		$result = mysqli_query($connect, $query);                       // execute the query
+		$prodArray = mysqli_fetch_all($result,MYSQLI_ASSOC);				//load all products into an assoc array -Martin
+		$nameList=[];
+		foreach($_SESSION['shopping_cart'] as $prodName):				//load names of products in shopping cart -Martin
+			array_push($nameList,$prodName['name']);
+		endforeach;
+		foreach($prodArray as $key):							//Iterate over entire product table to check which are in shopping cart -Martin
+			if(in_array($key['productName'],$nameList)){
+				$productInfo = $key;							//Assign entire information about products in shopping cart -Martin
+			}
+		endforeach;
+		?>
 	  <div class="table-responsive">      <!-- when window is small, table is scrollable -->
-		<table class="table">
-			<tr><th colspan="5"><h3>Order Detail</h3></th></tr>
-			<tr>
+		<table class="table">			<!--Editted Shopping Cart to show price instead of weight -Martin-->
+			<tr><th colspan="7"><h3>Items</h3></th></tr>
+			<tr>						<!--Added detail info about products with product picture-->
+				<th width="10%"></th>
 				<th width="40%">Product Name</th>
+				<th width="10%">Country</th>
+				<th width="10%">Grade</th>
+				<th width="10%">Aging</th>
 				<th width="10%">Quantity</th>
-				<th width="20%">Price per Unit</th>
+				<th width="20%">Price</th>
 				<th width="15%">Total Price</th>
 				<th width="5%">Action</th>
 			</tr>
@@ -82,10 +101,14 @@
 				foreach($_SESSION['shopping_cart'] as $key => $product):
 			?>
 			<tr>
+				<td><img src="./img/<?php echo $productInfo['picture'];?>"/></td>
 				<td><?php echo $product['name']; ?></td>
+				<td><?php echo $productInfo['country'];?></td>
+				<td><?php echo $productInfo['grade'];?></td>
+				<td><?php echo $productInfo['aging'];?></td>
 				<td><?php echo $product['quantity']; ?></td>
-				<td><i class="fas fa-pound-sign"></i> <?php echo $product['weight']; ?></td>
-				<td><i class="fas fa-pound-sign"></i> <?php echo number_format($product['quantity'] * $product['weight'], 2); ?></td>
+				<td><i class="fas fa-dollar-sign"></i> <?php echo $product['price']; ?></td>
+				<td><i class="fas fa-dollar-sign"></i> <?php echo number_format($product['quantity'] * $product['price'], 2); ?></td>
 				<td>
 					<a class="mb-2" href="shop_beef.php?action=delete&id=<?php echo $product['id']; ?>">
 						<div class="btn btn-danger">Remove</div>
@@ -94,20 +117,20 @@
 			</tr>
 
 			<?php
-				$total = $total + ($product['quantity'] * $product['weight']);
+				$total = $total + ($product['quantity'] * $product['price']);
 				endforeach;
 			?>
 			<tr>
-				<td colspan="3" align="right">Total</td>
-				<td align="right"><i class="fas fa-pound-sign"></i> <?php echo number_format($total, 2); ?></td>
+				<td colspan="7" align="right">Total</td>
+				<td align="right"><i class="fas fa-dollar-sign"></i> <?php echo number_format($total, 2); ?></td>
 			</tr>
 			<tr>
-				<td colspan="5">
+				<td colspan="8">
 					<?php
 						if (isset($_SESSION['shopping_cart'])):
 						if (count($_SESSION['shopping_cart']) > 0):
 					?>
-						<a href="thankYou.php" class="btn btn-primary btn-block" >Confirm Order</a>
+						<a href="checkout.php" class="btn btn-primary btn-block" >Confirm Order</a>
 						<?php endif; endif; ?>
 				</td>
 			</tr>
